@@ -1,5 +1,10 @@
-a, p, ul, span, h3, h4 {
-  font-family: 'Montserrat', sans-serif !important;
+a,
+p,
+ul,
+span,
+h3,
+h4 {
+  font-family: "Montserrat", sans-serif !important;
   font-weight: 400 !important;
   color: #000 !important;
 }
@@ -39,7 +44,7 @@ nav.navbar {
   position: fixed !important;
   top: 0px;
   z-index: 1;
-  transition: all .35s ease-in-out;
+  transition: all 0.35s ease-in-out;
 }
 
 nav .row {
@@ -125,7 +130,7 @@ nav a.button:hover {
   padding: 0px;
   position: relative;
   top: 0px;
-  transition: all .25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 .content .content-list .list-item p {
@@ -143,7 +148,8 @@ nav a.button:hover {
   margin-top: 22px;
 }
 
-.content .content-android .container, .content .content-android .row {
+.content .content-android .container,
+.content .content-android .row {
   height: 100%;
 }
 
@@ -195,7 +201,7 @@ nav a.button:hover {
   left: -64px;
   transform: rotate(-6deg);
   cursor: pointer;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: 2px solid #9922F0;
   overflow: hidden;
   margin-bottom: 1.25rem;
@@ -206,7 +212,7 @@ nav a.button:hover {
 .content .content-form .form-block .reklama-container .reklama-item .card-header {
   padding: 2px 8px !important;
   border: #fff 2px solid;
-  border-radius: .5rem .5rem 0 0;
+  border-radius: 0.5rem 0.5rem 0 0;
   background-color: #9922F0;
   color: #fff !important;
   text-align: center;
@@ -348,7 +354,7 @@ nav a.button:hover {
   position: absolute;
   width: 100%;
   text-align: center;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .content .content-form .places-block .places-list .place-list .place-list-empty {
@@ -358,13 +364,13 @@ nav a.button:hover {
 }
 
 .content .content-form .places-block .places-list .place-list .place-item-block {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
   font-weight: 400 !important;
   color: #000 !important;
   background-color: #eee;
   margin-left: 0px;
   margin-right: 0px;
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
   border-radius: 4px;
 }
 
@@ -388,7 +394,7 @@ nav a.button:hover {
 .content .content-form .places-block .places-list .place-list .place-item-block .place-item-value .item-value-container {
   position: relative;
   right: -10px;
-  transition: all .35s ease-in-out;
+  transition: all 0.35s ease-in-out;
 }
 
 .content .content-form .places-block .places-list .place-list .place-item-block .place-item-value .item-value-container span.item-value {
@@ -436,7 +442,7 @@ nav a.button:hover {
 
 .content .content-warning {
   margin-top: 10px;
-  padding: .75rem;
+  padding: 0.75rem;
 }
 
 .content .content-warning p {
@@ -464,9 +470,9 @@ nav a.button:hover {
 }
 
 .content .content-questions .card.card-body {
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 18px;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 footer {
@@ -475,7 +481,8 @@ footer {
   padding-top: 2px;
 }
 
-footer p, footer a {
+footer p,
+footer a {
   display: block;
   color: #fff !important;
   margin: 10px 0px;
@@ -495,7 +502,8 @@ footer a.small-letter {
   font-size: 10px;
 }
 
-.modal ul a, .modal ul span {
+.modal ul a,
+.modal ul span {
   font-size: 18px;
 }
 
@@ -531,31 +539,39 @@ footer a.small-letter {
   p.section-title {
     font-size: 30px;
   }
+
   .content .content-form .form-block {
     width: 100%;
   }
+
   .content .content-form .form-block .reklama-container .reklama-item {
     top: -4px;
     left: 0px;
   }
+
   .content .content-form .form-block .reklama-container .reklama-item .card-body {
     font-size: 14px;
   }
+
   .content .content-form .form-block .select-route-container {
     padding-top: 76px;
   }
+
   .content .content-form .form-block .route-list .route-item {
     left: 0px;
   }
+
   .content .content-form .form-block .route-list .route-item .card-header {
     padding: 4px;
     font-size: 16px;
     line-height: normal;
   }
+
   .content .content-form .form-block .route-list .route-item .card-body {
     padding: 0px 4px !important;
     font-size: 16px;
   }
+
   .content .content-warning p {
     font-size: 16px;
   }
@@ -565,33 +581,42 @@ footer a.small-letter {
   .content .content-main .main-title {
     font-size: 29px;
   }
+
   .content .content-main .main-text {
     font-size: 20px;
   }
+
   .content .content-main .main-tel {
     font-size: 32px;
   }
+
   .content .content-main ul.main-list {
     width: 76px;
     margin-top: 0px;
     font-size: 12px;
   }
+
   .content .content-main img.main-list {
     height: 14px;
   }
+
   .content .content-form .places-block .places-control.card .card-body .row .places-control-list {
     padding: 1rem !important;
   }
+
   .content .content-form .places-block .places-list .place-list .place-item-block .place-item-value .item-value-container button.item-button {
     padding: 4px 6px;
     font-size: 10px;
   }
+
   .content .content-form .places-block .places-list .place-list .place-item-block .place-item-value.active .item-value-container {
     right: -125px;
   }
+
   footer p {
     font-size: 12px;
   }
+
   footer p .column-right {
     padding-top: 0px;
   }
@@ -601,12 +626,15 @@ footer a.small-letter {
   .content .content-android span.android-text {
     font-size: 13px !important;
   }
+
   .content .content-form .places-block .places-control.card .card-body .row .places-control-list {
-    padding: .5rem !important;
+    padding: 0.5rem !important;
   }
+
   .content .content-form .places-block .places-control.card .card-body .row .places-control-list p.date-text {
     font-size: 16px !important;
   }
+
   .content .content-form .places-block .places-control.card .card-body .row .places-control-list p.day-text {
     font-size: 14px !important;
   }
@@ -614,32 +642,38 @@ footer a.small-letter {
 
 @media (max-width: 340px) {
   .content .content-form .places-block .card .card-text {
-    font-size: .75rem;
+    font-size: 0.75rem;
   }
+
   .content .content-form .places-block .card .card-title {
     font-size: 1rem;
   }
+
   .content .content-android span.android-text {
     font-size: 11px;
   }
+
   .content .content-main .content-main .main-title {
     font-size: 20px;
   }
+
   .content .content-main .main-text {
     font-size: 14px;
   }
+
   .content .content-main .main-tel {
     font-size: 22px;
     padding-top: 4px;
   }
+
   .content .content-main ul.main-list {
     width: 56px;
     font-size: 10px;
   }
+
   .content .content-main img.main-list {
     height: 12px;
     margin-right: 0px;
   }
 }
 
-/*# sourceMappingURL=style.css.map */

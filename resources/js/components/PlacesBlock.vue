@@ -7,7 +7,7 @@
                     <div class="col-2 places-control-list">
                         <input type="text" :id="datepickerId" class="datepicker-here" readonly>
                         <label :for="datepickerId">
-                            <img class="datepicker-icon" src="/assets/image/09.jpg" alt="Calendar">
+                            <img class="datepicker-icon" src="/img/09.jpg" alt="Calendar">
                         </label>
                     </div>
                     <div class="col-6 places-control-list list-item-0" :class="{selected: isDay0Select}"   v-on:click="changeViewDay(0)">
@@ -44,7 +44,7 @@
                 <input type="hidden" name="time"        value=""/>
                 <input type="hidden" name="tripList"    value=""/>
                 <input type="hidden" name="tripId"      value=""/>
-                <place-item v-for="currPlace in currrPlaceList" :place-item-data="currPlace" v-on:select-time="selectTime" :key="currPlace.tripID"></place-item>
+                <place-item v-for="currPlace in currPlaceList" :place-item-data="currPlace" v-on:select-time="selectTime" :key="currPlace.tripID"></place-item>
                 <!--p class="place-list-warning">Временно недоступен</p-->
             </form>
         </div>
@@ -72,7 +72,8 @@
                 isListEmpty: false,
                 isPreloaderVisible: true,
                 //placeListArray: [],
-                currrPlaceList: [],
+                currPlaceList: [],
+                tempPlaceList: [],
                 currPlaceListKey: '',
                 requestString: '',
                 responceData: []
@@ -203,10 +204,10 @@
                 var tempForm = document.forms[this.routeId];
                 tempForm.tripId.value = dateObj.tripID;
 
-                this.currrPlaceList = this.currrPlaceList.map(function (item) {
+                this.tempPlaceList = this.currPlaceList.map(function (item) {
                     return item.hours + ',' + item.min + ',' + item.tripID + ',' + item.value;
                 });
-                tempForm.tripList.value = this.currrPlaceList.join(';');
+                tempForm.tripList.value = this.tempPlaceList.join(';');
 
                 tempForm.date.value = this.currViewDate.getFullYear() + '-' + this.currViewDate.getMonth() + '-' + this.currViewDate.getDate();
                 if (+dateObj.hours < 10) {this.currViewTime = '0' +  dateObj.hours;} else {this.currViewTime = dateObj.hours;}
@@ -227,7 +228,7 @@
             },
             parseResponce: function (responce) {
                 this.responceData = responce.data;
-                this.currrPlaceList = [];
+                this.currPlaceList = [];
 
                 this.responceData.forEach(function(item, i) {
                     var tripDate = new Date(item.TripDateUniverse);
@@ -239,7 +240,7 @@
 
                     if (item.SeatsCount == 0) item.SeatsCount = 17;
 
-                    this.currrPlaceList[i] = {
+                    this.currPlaceList[i] = {
                         'tripID': item.ID,
                         'min': tripDate.getMinutes(),
                         'hours': tripDate.getHours(),
@@ -250,9 +251,9 @@
 
                 }, this);
 
-                this.currrPlaceList = this.currrPlaceList.filter(item => item.value > 0);
+                this.currPlaceList = this.currPlaceList.filter(item => item.value > 0);
 
-                this.currrPlaceList.sort(function(a, b) {
+                this.currPlaceList.sort(function(a, b) {
                     if (+a.hours > +b.hours) {
                         return 1;
                     } else {
@@ -268,7 +269,7 @@
                     }
                 });
 
-                if (this.currrPlaceList.length > 0) {
+                if (this.currPlaceList.length > 0) {
                     this.isListEmpty = false;
                 } else {
                     this.isListEmpty = true;

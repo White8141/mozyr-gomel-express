@@ -339,7 +339,8 @@ __webpack_require__.r(__webpack_exports__);
       isListEmpty: false,
       isPreloaderVisible: true,
       //placeListArray: [],
-      currrPlaceList: [],
+      currPlaceList: [],
+      tempPlaceList: [],
       currPlaceListKey: '',
       requestString: '',
       responceData: []
@@ -497,10 +498,10 @@ __webpack_require__.r(__webpack_exports__);
       console.log('Подготовка к отправке');
       var tempForm = document.forms[this.routeId];
       tempForm.tripId.value = dateObj.tripID;
-      this.currrPlaceList = this.currrPlaceList.map(function (item) {
+      this.tempPlaceList = this.currPlaceList.map(function (item) {
         return item.hours + ',' + item.min + ',' + item.tripID + ',' + item.value;
       });
-      tempForm.tripList.value = this.currrPlaceList.join(';');
+      tempForm.tripList.value = this.tempPlaceList.join(';');
       tempForm.date.value = this.currViewDate.getFullYear() + '-' + this.currViewDate.getMonth() + '-' + this.currViewDate.getDate();
 
       if (+dateObj.hours < 10) {
@@ -518,7 +519,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       tempForm.time.value = this.currViewTime;
-      console.log('Можно отправлять'); //tempForm.submit();
+      console.log('Можно отправлять');
+      tempForm.submit();
     },
     axiosRequest: function axiosRequest(viewDate) {
       var _this = this;
@@ -531,7 +533,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     parseResponce: function parseResponce(responce) {
       this.responceData = responce.data;
-      this.currrPlaceList = [];
+      this.currPlaceList = [];
       this.responceData.forEach(function (item, i) {
         var tripDate = new Date(item.TripDateUniverse);
         /*if (+tripDate.getHours() == 6) {
@@ -540,7 +542,7 @@ __webpack_require__.r(__webpack_exports__);
         }*/
 
         if (item.SeatsCount == 0) item.SeatsCount = 17;
-        this.currrPlaceList[i] = {
+        this.currPlaceList[i] = {
           'tripID': item.ID,
           'min': tripDate.getMinutes(),
           'hours': tripDate.getHours(),
@@ -549,10 +551,10 @@ __webpack_require__.r(__webpack_exports__);
           'value': item.SeatsCount - item.SeatsBusyCount
         };
       }, this);
-      this.currrPlaceList = this.currrPlaceList.filter(function (item) {
+      this.currPlaceList = this.currPlaceList.filter(function (item) {
         return item.value > 0;
       });
-      this.currrPlaceList.sort(function (a, b) {
+      this.currPlaceList.sort(function (a, b) {
         if (+a.hours > +b.hours) {
           return 1;
         } else {
@@ -568,7 +570,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
 
-      if (this.currrPlaceList.length > 0) {
+      if (this.currPlaceList.length > 0) {
         this.isListEmpty = false;
       } else {
         this.isListEmpty = true;
@@ -784,7 +786,7 @@ var render = function() {
             _c("label", { attrs: { for: _vm.datepickerId } }, [
               _c("img", {
                 staticClass: "datepicker-icon",
-                attrs: { src: "/assets/image/09.jpg", alt: "Calendar" }
+                attrs: { src: "/img/09.jpg", alt: "Calendar" }
               })
             ])
           ]),
@@ -919,7 +921,7 @@ var render = function() {
                 attrs: { type: "hidden", name: "tripId", value: "" }
               }),
               _vm._v(" "),
-              _vm._l(_vm.currrPlaceList, function(currPlace) {
+              _vm._l(_vm.currPlaceList, function(currPlace) {
                 return _c("place-item", {
                   key: currPlace.tripID,
                   attrs: { "place-item-data": currPlace },
@@ -1373,8 +1375,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\OSPanel\domains\mge\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\OSPanel\domains\mge\resources\sass\style.scss */"./resources/sass/style.scss");
+__webpack_require__(/*! E:\OSPanel\domains\phalcon-mozyr-gomel-express\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! E:\OSPanel\domains\phalcon-mozyr-gomel-express\resources\sass\style.scss */"./resources/sass/style.scss");
 
 
 /***/ })
