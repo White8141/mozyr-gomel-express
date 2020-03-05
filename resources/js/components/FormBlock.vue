@@ -22,7 +22,7 @@
             </div>
         </div>
         <p class="section-title">{{ currCityFrom }} - {{ currCityTo }}</p>
-        <places-block class="col-12" :city-from="currCityFrom" :city-to="currCityTo" block-id="0" :route-id="currRouteId"></places-block>
+        <places-block class="col-12" :city-from="currCityFrom" :city-to="currCityTo" block-id="0" :route-id="currRouteId" :token="token" :token-key="tokenKey"></places-block>
         <!--places-block class="col-12 col-lg-6" city-from="Гомель" city-to="Мозырь" block-id="1" route-id="ed254dcc-2a8f-443a-855b-f0303836016d" route-reverse-id="2a989739-f20c-4f64-b8a3-3c95724133c3"></places-block-->
     </div>
 </template>
@@ -42,6 +42,16 @@
 
             }
         },
+        props: {
+            token: {
+                type: String,
+                required: true
+            },
+            tokenKey: {
+                type: String,
+                required: true
+            }
+        },
         components:{
             'places-block': PlacesBlock
         },
@@ -52,15 +62,20 @@
             sendRequest: function (target) {
                 switch (target) {
                     case 'routes':
-                        //console.log ('Надо получить маршруты');
-                        this.requestString = 'http://93.84.84.168:9494/BiletionApiService/routes?apikey=56tRR980oPkbx';
-                        axios.get(this.requestString)
-                                .then(this.parseRoutes);
+                        axios({
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            data: {
+                                [this.tokenKey]: this.token
+                            },
+                            url: '/api/routes'
+                        })
+                        .then(this.parseRoutes);
                         break;
                 }
             },
             parseRoutes: function (responce) {
-                this.responceData = responce.data;
+                this.responceData = JSON.parse(responce.data);
 
                 this.responceData.forEach(function(item) {
                     this.routeList.push(item);

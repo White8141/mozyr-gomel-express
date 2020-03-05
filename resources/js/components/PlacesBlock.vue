@@ -37,6 +37,7 @@
             </div>
             <form v-else action="http://online.m10.by/"      method="post" class="place-list" :name="routeId" :key="routeId">
             <!--form v-else action="http://m10/"      method="post" class="place-list" :name="routeId" :key="routeId"-->
+                <input type="hidden" :name="tokenKey"   :value="token"/>
                 <input type="hidden" name="routeId"     :value="routeId"/>
                 <input type="hidden" name="cityFrom"    :value="cityFrom"/>
                 <input type="hidden" name="cityTo"      :value="cityTo"/>
@@ -80,6 +81,14 @@
             }
         },
         props: {
+            token: {
+                type: String,
+                required: true
+            },
+            tokenKey: {
+                type: String,
+                required: true
+            },
             blockId: {
                 type: String,
                 required: true

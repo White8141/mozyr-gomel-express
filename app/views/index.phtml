@@ -131,7 +131,7 @@
             </div>
             <div class="content-form" id="app">
                 <div class="container">
-                    <form-block></form-block>
+                    <form-block token="<?php echo $this->security->getToken() ?>" token-key="<?php echo $this->security->getTokenKey() ?>"></form-block>
                 </div>
             </div>
             <div class="content-questions container">

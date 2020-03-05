@@ -96,6 +96,8 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PlacesBlock_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlacesBlock.vue */ "./resources/js/components/PlacesBlock.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -137,6 +139,16 @@ __webpack_require__.r(__webpack_exports__);
       currCityTo: 'Гомель'
     };
   },
+  props: {
+    token: {
+      type: String,
+      required: true
+    },
+    tokenKey: {
+      type: String,
+      required: true
+    }
+  },
   components: {
     'places-block': _PlacesBlock_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -147,14 +159,19 @@ __webpack_require__.r(__webpack_exports__);
     sendRequest: function sendRequest(target) {
       switch (target) {
         case 'routes':
-          //console.log ('Надо получить маршруты');
-          this.requestString = 'http://93.84.84.168:9494/BiletionApiService/routes?apikey=56tRR980oPkbx';
-          axios.get(this.requestString).then(this.parseRoutes);
+          axios({
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: _defineProperty({}, this.tokenKey, this.token),
+            url: '/api/routes'
+          }).then(this.parseRoutes);
           break;
       }
     },
     parseRoutes: function parseRoutes(responce) {
-      this.responceData = responce.data;
+      this.responceData = JSON.parse(responce.data);
       this.responceData.forEach(function (item) {
         this.routeList.push(item);
       }, this);
@@ -319,6 +336,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -347,6 +365,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   props: {
+    token: {
+      type: String,
+      required: true
+    },
+    tokenKey: {
+      type: String,
+      required: true
+    },
     blockId: {
       type: String,
       required: true
@@ -664,7 +690,9 @@ var render = function() {
           "city-from": _vm.currCityFrom,
           "city-to": _vm.currCityTo,
           "block-id": "0",
-          "route-id": _vm.currRouteId
+          "route-id": _vm.currRouteId,
+          token: _vm.token,
+          "token-key": _vm.tokenKey
         }
       })
     ],
@@ -890,6 +918,11 @@ var render = function() {
               }
             },
             [
+              _c("input", {
+                attrs: { type: "hidden", name: _vm.tokenKey },
+                domProps: { value: _vm.token }
+              }),
+              _vm._v(" "),
               _c("input", {
                 attrs: { type: "hidden", name: "routeId" },
                 domProps: { value: _vm.routeId }
@@ -1375,8 +1408,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\OSPanel\domains\phalcon-mozyr-gomel-express\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! E:\OSPanel\domains\phalcon-mozyr-gomel-express\resources\sass\style.scss */"./resources/sass/style.scss");
+__webpack_require__(/*! D:\OSPanel\domains\mge\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\OSPanel\domains\mge\resources\sass\style.scss */"./resources/sass/style.scss");
 
 
 /***/ })
