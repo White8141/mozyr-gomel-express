@@ -56,24 +56,17 @@
             'places-block': PlacesBlock
         },
         mounted: function () {
-            this.sendRequest('routes');
+            axios({
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                data: {
+                    [this.tokenKey]: this.token
+                },
+                url: '/api/routes'
+            })
+            .then(this.parseRoutes);
         },
         methods: {
-            sendRequest: function (target) {
-                switch (target) {
-                    case 'routes':
-                        axios({
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            data: {
-                                [this.tokenKey]: this.token
-                            },
-                            url: '/api/routes'
-                        })
-                        .then(this.parseRoutes);
-                        break;
-                }
-            },
             parseRoutes: function (responce) {
                 this.responceData = JSON.parse(responce.data);
 

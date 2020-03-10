@@ -228,15 +228,27 @@
 
             },
             axiosRequest: function (viewDate) {
-                this.requestString = 'http://93.84.84.168:9494/BiletionApiService/trips/filter3/' + viewDate.getDate() + '.' + (1 + viewDate.getMonth()) + '.' + viewDate.getFullYear() + ' 00:00:00/' + viewDate.getDate() + '.' + (1 + viewDate.getMonth()) + '.' + viewDate.getFullYear() + ' 23:59:59/' + this.routeId + '/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000/True?apikey=56tRR980oPkbx';
                 this.isPreloaderVisible = true;
-                axios
+                axios({
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    data: {
+                        [this.tokenKey]: this.token,
+                        date: viewDate.getDate() + '.' + (1 + viewDate.getMonth()) + '.' + viewDate.getFullYear(),
+                        route: this.routeId
+                    },
+                    url: '/api/trips'
+                })
+                .then(this.parseResponce)
+                .finally(() => (this.isPreloaderVisible = false));
+                /*axios
                     .get(this.requestString)
                     .then(this.parseResponce)
-                    .finally(() => (this.isPreloaderVisible = false));
+                    .finally(() => (this.isPreloaderVisible = false));*/
             },
             parseResponce: function (responce) {
-                this.responceData = responce.data;
+                //console.log (responce.data);
+                this.responceData = JSON.parse(responce.data);
                 this.currPlaceList = [];
 
                 this.responceData.forEach(function(item, i) {

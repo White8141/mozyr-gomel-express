@@ -153,23 +153,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     'places-block': _PlacesBlock_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
-    this.sendRequest('routes');
+    axios({
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: _defineProperty({}, this.tokenKey, this.token),
+      url: '/api/routes'
+    }).then(this.parseRoutes);
   },
   methods: {
-    sendRequest: function sendRequest(target) {
-      switch (target) {
-        case 'routes':
-          axios({
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data: _defineProperty({}, this.tokenKey, this.token),
-            url: '/api/routes'
-          }).then(this.parseRoutes);
-          break;
-      }
-    },
     parseRoutes: function parseRoutes(responce) {
       this.responceData = JSON.parse(responce.data);
       this.responceData.forEach(function (item) {
@@ -284,6 +277,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PlaceItemBlock_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlaceItemBlock.vue */ "./resources/js/components/PlaceItemBlock.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -549,16 +544,28 @@ __webpack_require__.r(__webpack_exports__);
       tempForm.submit();
     },
     axiosRequest: function axiosRequest(viewDate) {
-      var _this = this;
+      var _data,
+          _this = this;
 
-      this.requestString = 'http://93.84.84.168:9494/BiletionApiService/trips/filter3/' + viewDate.getDate() + '.' + (1 + viewDate.getMonth()) + '.' + viewDate.getFullYear() + ' 00:00:00/' + viewDate.getDate() + '.' + (1 + viewDate.getMonth()) + '.' + viewDate.getFullYear() + ' 23:59:59/' + this.routeId + '/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000/True?apikey=56tRR980oPkbx';
       this.isPreloaderVisible = true;
-      axios.get(this.requestString).then(this.parseResponce)["finally"](function () {
+      axios({
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: (_data = {}, _defineProperty(_data, this.tokenKey, this.token), _defineProperty(_data, "date", viewDate.getDate() + '.' + (1 + viewDate.getMonth()) + '.' + viewDate.getFullYear()), _defineProperty(_data, "route", this.routeId), _data),
+        url: '/api/trips'
+      }).then(this.parseResponce)["finally"](function () {
         return _this.isPreloaderVisible = false;
       });
+      /*axios
+          .get(this.requestString)
+          .then(this.parseResponce)
+          .finally(() => (this.isPreloaderVisible = false));*/
     },
     parseResponce: function parseResponce(responce) {
-      this.responceData = responce.data;
+      //console.log (responce.data);
+      this.responceData = JSON.parse(responce.data);
       this.currPlaceList = [];
       this.responceData.forEach(function (item, i) {
         var tripDate = new Date(item.TripDateUniverse);
@@ -1408,8 +1415,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\OSPanel\domains\mge\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\OSPanel\domains\mge\resources\sass\style.scss */"./resources/sass/style.scss");
+__webpack_require__(/*! E:\OSPanel\domains\phalcon-mozyr-gomel-express\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! E:\OSPanel\domains\phalcon-mozyr-gomel-express\resources\sass\style.scss */"./resources/sass/style.scss");
 
 
 /***/ })
