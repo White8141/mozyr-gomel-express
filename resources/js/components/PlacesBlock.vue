@@ -65,6 +65,9 @@
                 isDay1Select: false,
                 isDay2Select: false,
                 dayNameArray: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс', 'Пн', 'Вт'],
+                /**
+                 * Дата, выбранная на календаре
+                **/
                 currDate: new Date(),
                 startViewDate: new Date(),
                 currViewDate: new Date(),
@@ -76,7 +79,6 @@
                 currPlaceList: [],
                 tempPlaceList: [],
                 currPlaceListKey: '',
-                requestString: '',
                 responceData: []
             }
         },
@@ -147,7 +149,6 @@
                     onSelect: this.selectStartViewDay
                 });
 
-                //this.requestString = 'http://93.84.84.168:9494/BiletionApiService/trips/filter3/' + this.currDate.getDate() + '.' + (1 + this.currDate.getMonth()) + '.' + this.currDate.getFullYear() + ' 00:00:00/' + this.currDate.getDate() + '.' + (1 + this.currDate.getMonth()) + '.' + this.currDate.getFullYear() + ' 23:59:59/' + this.routeId + '/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000/True?apikey=56tRR980oPkbx';
                 this.axiosRequest(this.currDate);
             },
             selectStartViewDay: function (fd, date, inst) {
@@ -179,7 +180,6 @@
                 this.isDay1Select = false;
                 this.isDay2Select = false;
 
-                //this.requestString = 'http://93.84.84.168:9494/BiletionApiService/trips/filter3/' + this.currViewDate.getDate() + '.' + (1 + this.currViewDate.getMonth()) + '.' + this.currViewDate.getFullYear() + ' 00:00:00/' + this.currViewDate.getDate() + '.' + (1 + this.currViewDate.getMonth()) + '.' + this.currViewDate.getFullYear() + ' 23:59:59/' + this.routeId + '/00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000/True?apikey=56tRR980oPkbx';
                 this.axiosRequest(this.currViewDate);
 
                 inst.hide();
@@ -241,62 +241,60 @@
                 })
                 .then(this.parseResponce)
                 .finally(() => (this.isPreloaderVisible = false));
-                /*axios
-                    .get(this.requestString)
-                    .then(this.parseResponce)
-                    .finally(() => (this.isPreloaderVisible = false));*/
             },
             parseResponce: function (responce) {
-                //console.log (responce.data);
-                this.responceData = JSON.parse(responce.data);
-                this.currPlaceList = [];
+                try {
+                    this.responceData = JSON.parse(responce.data);
 
-                this.responceData.forEach(function(item, i) {
-                    var tripDate = new Date(item.TripDateUniverse);
+                    this.currPlaceList = [];
 
-                    /*if (+tripDate.getHours() == 6) {
-                        console.log ('Рейс на 6 утра, ID: ' + item.ID);
-                        //console.log ('Рейс на 6 утра, ID: ' + item.ID);
-                    }*/
+                    this.responceData.forEach(function(item, i) {
+                        var tripDate = new Date(item.TripDateUniverse);
 
-                    if (item.SeatsCount == 0) item.SeatsCount = 17;
+                        if (item.SeatsCount == 0) item.SeatsCount = 17;
 
-                    this.currPlaceList[i] = {
-                        'tripID': item.ID,
-                        'min': tripDate.getMinutes(),
-                        'hours': tripDate.getHours(),
-                        'cityFrom': this.cityFrom,
-                        'cityTo': this.cityTo,
-                        'value': item.SeatsCount - item.SeatsBusyCount
-                    };
+                        this.currPlaceList[i] = {
+                            'tripID': item.ID,
+                            'min': tripDate.getMinutes(),
+                            'hours': tripDate.getHours(),
+                            'cityFrom': this.cityFrom,
+                            'cityTo': this.cityTo,
+                            'value': item.SeatsCount - item.SeatsBusyCount
+                        };
 
-                }, this);
+                    }, this);
 
-                this.currPlaceList = this.currPlaceList.filter(item => item.value > 0);
+                    this.currPlaceList = this.currPlaceList.filter(item => item.value > 0);
 
-                this.currPlaceList.sort(function(a, b) {
-                    if (+a.hours > +b.hours) {
-                        return 1;
-                    } else {
-                        if (+a.hours == +b.hours) {
-                            if (+a.min > +b.min) {
-                                return 1;
+                    this.currPlaceList.sort(function(a, b) {
+                        if (+a.hours > +b.hours) {
+                            return 1;
+                        } else {
+                            if (+a.hours == +b.hours) {
+                                if (+a.min > +b.min) {
+                                    return 1;
+                                } else {
+                                    return -1;
+                                }
                             } else {
                                 return -1;
                             }
-                        } else {
-                            return -1;
                         }
+                    });
+
+                    if (this.currPlaceList.length > 0) {
+                        this.isListEmpty = false;
+                    } else {
+                        this.isListEmpty = true;
                     }
-                });
 
-                if (this.currPlaceList.length > 0) {
-                    this.isListEmpty = false;
-                } else {
+                    this.currPlaceListKey = this.currViewDate.toDateString();
+                } catch (err) {
                     this.isListEmpty = true;
+                    console.log ('Trips Error:');
+                    console.log ('Name: ' + err.name);
+                    console.log ('Message: ' + err.message);
                 }
-
-                this.currPlaceListKey = this.currViewDate.toDateString();
             }
         },
         watch: {

@@ -68,34 +68,41 @@
         },
         methods: {
             parseRoutes: function (responce) {
-                this.responceData = JSON.parse(responce.data);
+                try {
+                    this.responceData = JSON.parse(responce.data);
 
-                this.responceData.forEach(function(item) {
-                    this.routeList.push(item);
-                }, this);
+                    this.responceData.forEach(function(item) {
+                        this.routeList.push(item);
+                    }, this);
 
-                this.routeList = this.routeList.filter(function (item, i) {
-                    return !(item['CityFrom'] == 'Киев' || item['CityTo'] == 'Киев');
-                });
+                    this.routeList = this.routeList.filter(function (item, i) {
+                        return !(item['CityFrom'] == 'Киев' || item['CityTo'] == 'Киев');
+                    });
 
-                this.routeList = this.routeList.sort(function (a, b) {
-                    if (+a['Name'] > +b['Name']) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                });
+                    this.routeList = this.routeList.sort(function (a, b) {
+                        if (+a['Name'] > +b['Name']) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    });
 
-                this.routeList.map(function(item) {
-                    if (item['CityFrom'] == 'Мозырь') {
-                        this.routeSortedList.push(item);
-                        var tempVar = this.routeList.find(function (routeItem) {
-                            return routeItem['CityFrom'] == item['CityTo'];
-                        }, this);
-                        if (tempVar != undefined) this.routeSortedList.push(tempVar);
-                    }
-                }, this);
-                //console.log ('Маршруты отстрртированы');
+                    this.routeList.map(function(item) {
+                        if (item['CityFrom'] == 'Мозырь') {
+                            this.routeSortedList.push(item);
+                            var tempVar = this.routeList.find(function (routeItem) {
+                                return routeItem['CityFrom'] == item['CityTo'];
+                            }, this);
+                            if (tempVar != undefined) this.routeSortedList.push(tempVar);
+                        }
+                    }, this);
+                    //console.log ('Маршруты отстрртированы');
+                } catch (err) {
+                    console.log ('Routes Error:');
+                    console.log ('Name: ' + err.name);
+                    console.log ('Message: ' + err.message);
+                }
+
             },
             changeRoute: function (route) {
                 //console.log ('Поменять маршрут');
